@@ -1,18 +1,20 @@
 from manim import *
-from scipy.fftpack import shift
+# from scipy.fftpack import shift # When did this get here???
 
-# class ModelEQs(Scene):
-# 	def construct(self):
-# 		ODSys_R = Tex(r"$ \dot{R_i} = \rho_{i} + R_{i} \sum_{j} C_{ij} S_{j}$")
 
-# 		ODSys_S = Tex(r"$\dot{S_i} = \epsilon S_{i} \sum_{j} C_{ij}^{T} R_{j} - \mu_{i} S_{i}.$")
+###############################################################################################################
+#### To render to mp4:
+### You should have ffmpeg installed (and I think added to PATH? It's in the manim docs, anyway) and manim.
+### Use the following in the cmd line from this mb_animation folder:
+##################################################################################
+################## manim -pql model_equations.py SCENE_NAME ######################
+##################################################################################
+### '-p' flag makes the video open in your default player once it's done.
+### '-ql' flag renders to 480p, 15fps?
+### '-qh' flag renders to butter.
+### Can also leave 'SCENE_NAME' blank/as a typo so that manim brings up a numbered list of all scenes in code.
+###############################################################################################################
 
-# 		# self.play(Write(ODSys_R))
-# 		ODSys_S.next_to(ODSys_R, DOWN)
-# 		self.play(Write(ODSys_R), Write(ODSys_S))
-# 		# self.wait(1)
-# 		self.play(FadeOut(ODSys_R), FadeOut(ODSys_S))
-# 		self.wait(3)
 
 class titleSplash(Scene):
 	def construct(self):
@@ -83,6 +85,11 @@ class worksCited(Scene):
 		self.add(main.to_edge(UP))
 		self.play(FadeIn(main, run_time=1))
 
+
+		### Might have been easier to separate the citations, but then I don't really know how to get the alignment to look nice (as if it all is on the same paragraph)
+		### I think there is a height/width argument that can limit the sizes of the text boxes so they line wrap/newline at the same place???
+		### Whatever, make one big LaTeX blob.
+
 		# work1 = Tex(r"May, R. Will a Large Complex System be Stable?. \textit{Nature} \textbf{238}, 413–414 (1972). https://doi.org/10.1038/238413a0", font_size=20)
 		# work2 = Tex(r"Butler, S., O’Dwyer, J.P. Stability criteria for complex microbial communities. \textit{Nat Commun} \textbf{9}, 2970 (2018). https://doi.org/10.1038/s41467-018-05308-z", font_size=20)
 		# work3 = Tex(r"Arnoldi, J-F. et al. Resilience, reactivity and variability : A mathematical comparison of ecological stability measures. \textit{Journal of Theoretical Biology}. \textbf{389}. (2015). 10.1016/j.jtbi.2015.10.012", font_size=20)
@@ -95,21 +102,15 @@ class worksCited(Scene):
 		work = Tex(r"\hangindent= 0.7cm \begin{flushleft} May, R. Will a Large Complex System be Stable?. \textit{Nature} \textbf{238}, 413–414 (1972). https://doi.org/10.1038/238413a0 \\ \vspace{5mm} Jost, L. Partitioning Diversity into Independent Alpha and Beta Components. \textit{Ecology}, \textbf{88}, 2427-2439. (2007) http://dx.doi.org/10.1890/06-1736.1 \\ \vspace{5mm} Arnoldi, J-F. et al. Resilience, reactivity and variability : A mathematical comparison of ecological stability measures. \textit{Journal of Theoretical Biology}. \textbf{389}. (2015). 10.1016/j.jtbi.2015.10.012 \\ \vspace{5mm} Butler, S., O’Dwyer, J.P. Stability criteria for complex microbial communities. \textit{Nat Commun} \textbf{9}, 2970 (2018). https://doi.org/10.1038/s41467-018-05308-z \\ \vspace{5mm} The Manim Community Developers. (2022). Manim – Mathematical Animation Framework (Version v0.16.0) [Computer software]. https://www.manim.community/\end{flushleft}", font_size=25)
 		self.play(FadeIn(work))
 		self.wait(2)
+
+		### They want a proper citation, turns out.
 		# manim_credit = Tex(r"Animated in manim", font_size=35)
 		# manim_credit.next_to(work, DOWN*4)
 		# self.play(Write(manim_credit))
-		self.wait(3)
+		# self.wait(3)
 
 		# self.play(FadeIn(works, run_time=1.5))
 
-
-# class odEQs(Scene):
-# 	def construct(self):
-# 		ODSys = MathTex(r" \dot{R_i} & = \rho_{i} + R_{i} \sum_{j}^{N} C_{ij} S_{j} \\ \dot{S_i} & = \epsilon S_{i} \sum_{j}^{N} C_{ij}^{T} R_{j} - \mu_{i} S_{i}.")
-# 		self.play(Write(ODSys))
-# 		self.wait(3)
-# 		self.play(FadeOut(ODSys))
-# 		self.wait(1)
 
 
 class EQs(Scene):
@@ -140,7 +141,7 @@ class EQs(Scene):
 		self.play(Write(glvList))
 		self.wait(2)
 
-		# Divider
+		# Divider line
 		median = Line((0,2,0), (0,-4,0))
 		self.play(Write(median))
 
@@ -183,6 +184,8 @@ class EQs(Scene):
 		self.wait(3)
 
 
+### Old plotting/axes scratchwork/monkey business. Tread if you dare.
+
 # class scatter(Scene):
 # 	def construct(self):
 # 		import pandas as pd
@@ -201,7 +204,6 @@ class EQs(Scene):
 # 		# # self.play(FadeIn(axes))
 # 		# self.add(axes)
 # 		# 
-
 
 # 		plane = NumberPlane(
 #             x_range = (0, 7),
@@ -241,12 +243,8 @@ class EQs(Scene):
 #             stroke_width = 4,
 #         )
 
-		
-
 # 		# self.play(Create(graph))
 # 		self.add(plane,line_graph)
-
-
 
 # 		self.wait(2)
 # 		# dots = VGroup(*[Dot().move_to(self.coords_to_point(coord[0],coord[1])) for coord in coords])
@@ -254,14 +252,7 @@ class EQs(Scene):
 # 		# print(coords)
 
 
-
-# ### OD System
-		
-# 		ODSys = MathTex(r" \dot{R_i} & = \rho_{i} + R_{i} \sum_{j}^{N} C_{ij} S_{j} \\ \dot{S_i} & = \epsilon S_{i} \sum_{j}^{N} C_{ij}^{T} R_{j} - \mu_{i} S_{i}.")
-# 		# self.play(Write(ODSys))
-# 		# self.wait(3)
-# 		# self.play(FadeOut(ODSys))
-# 		# self.wait(1)
+### Would benefit from more grouping (VGroup??) for cleaner code.
 
 class Diversity(Scene):
 	def construct(self):
@@ -317,13 +308,18 @@ class Arnoldi(Scene):
 		I_D = MathTex(r"\mathcal{I}_D = (\text{sup}_{\omega}\parallel(i \omega - A) ^{-1}\parallel_{spectral})^{-1}")
 		measures = VGroup(R_0, R_inf, I_S, I_D)
 
+
+		### Was planning on putting them all on screen at once, each with their own color.
+		### Manim docs use this key:value approach to set color of particular LaTeX elements
 		# for measure in measures:
 		# 	measure.set_color_by_tex_to_color_map({
 		# 		"\mathcal{R}_0": TEAL
+		#		"\mathcal{I}_S": PINK_B
         #     })
 
 		sub.next_to(measures, DOWN*4)
 
+		### Parameters for describing how the LaTeX animation transitions from one equation to the next.
 		kw = {"run_time": 3, "path_arc": PI / 2}
         # self.wait()
         # self.play(TransformMatchingShapes(target, source, **kw))
@@ -346,12 +342,19 @@ class Arnoldi(Scene):
 		self.wait(2)
 
 
+### Would REALLY benefit from a for loop (over each N), but then choosing the axis ticks/limits would have to be from
+### a list or calculated in the loop somehow. Ah, well. Just copypasta for dinner tonight.
+
+### ALSO, need to find a better way to have axis ticks work nicely. Really lame when the effective number of species
+### (x) axis does not quite go up to N (instead, just like (N-1).9 or N.1). Maybe, for each row, just check the range of 
+### values in each model and choose margins for both plots based on the greatest range. Then, it would be more uniform, but
+### would make gLV plots wayyyyy too zoomed out. Hrmm...... Maybe deceptive, different axes are the way to go.
 class StabDiv(Scene):
 	def construct(self):
-		subcol1=BLUE_B
-		subcol2 = GOLD_A
-		rad = 0.08/3
-		alph = 0.6
+		subcol1=BLUE_B # gLV color
+		subcol2 = GOLD_A # OD color
+		rad = 0.08/3 # scatterplot point size. Default is 0.08, so just scaling from there.
+		alph = 0.6 # scatterplot point opacity. Can't see much at 1.0.
 		axis_font_size = 35
 
 		import numpy as np
@@ -369,12 +372,12 @@ class StabDiv(Scene):
 		titles = VGroup(title1,title2,title3, Ns)
 		self.play(Write(titles))
 
-
-		coords = pd.read_csv(r"C:/Users/riley/Microbiome/animation/CSVs/gLV3.csv", index_col=0)
+		# I DID NOT choose a different name for the coordinates of each plot and I WILL NOT apologize.
+		coords = pd.read_csv(r"./CSVs/gLV3.csv", index_col=0)
 		
 		xlims = (coords.iloc[:,-1].min() - 1/9, coords.iloc[:,-1].max() + 1/9)
 		ylims = (coords.iloc[:,0].min() - 1/9, coords.iloc[:,0].max() + 1/9)
-		xmargin = 0.01*(xlims[1]-xlims[0])
+		xmargin = 0.01*(xlims[1]-xlims[0]) # Don't end up using this because setting it manually was better for my one-off needs.
 		ymargin = 0.03*(ylims[1]-ylims[0])
 		number_plane_gLV_A = NumberPlane(
 			x_range=(2.5, 3+1/9, 0.1),
@@ -388,8 +391,10 @@ class StabDiv(Scene):
 			}
 		).scale(0.4).to_edge(UP+LEFT)
 
-		gLV3_group = VGroup()
 
+		### Is this realllllly the only way to read in a CSV?
+		### Most (all) of the plotting docs for manim just show examples for plotting functions or single points, not data.
+		gLV3_group = VGroup()
 		for i in range(coords.shape[0]): 
 			dot = Dot(number_plane_gLV_A.coords_to_point(coords.iloc[i,-1], coords.iloc[i,0], 0), fill_opacity=alph, radius=rad, color=subcol1)
 			gLV3_group.add(dot)
@@ -397,7 +402,7 @@ class StabDiv(Scene):
 
 #################
 
-		coords = pd.read_csv(r"C:/Users/riley/Microbiome/animation/CSVs/OD3_CL1_noP.csv", index_col=0)
+		coords = pd.read_csv(r"./CSVs/OD3_CL1_noP.csv", index_col=0)
 		
 		xlims = (coords.iloc[:,-1].min() - 1/9, coords.iloc[:,-1].max() + 1/9)
 		ylims = (coords.iloc[:,0].min() - 1/9, coords.iloc[:,0].max() + 1/9)
@@ -421,11 +426,10 @@ class StabDiv(Scene):
 			dot = Dot(number_plane_OD_A.coords_to_point(coords.iloc[i,-1], coords.iloc[i,0], 0), fill_opacity=alph, radius=rad, color=subcol2)
 			OD3_CL1_group.add(dot)
 
-
+		### Decided to draw by 1 row at a time, first planes, then the points. 
 		self.play(Create(number_plane_gLV_A), Create(number_plane_OD_A))
 		# self.play(Write(gLV3_group))
 		# self.play(Create(number_plane_OD_A))
-
 		self.play(Write(gLV3_group), Write(OD3_CL1_group))
 
 		# self.wait(1)
@@ -434,7 +438,7 @@ class StabDiv(Scene):
 ##############
 ##############
 
-		coords = pd.read_csv(r"C:/Users/riley/Microbiome/animation/CSVs/gLV5.csv", index_col=0)
+		coords = pd.read_csv(r"./CSVs/gLV5.csv", index_col=0)
 		
 		xlims = (coords.iloc[:,-1].min() - 1/9, coords.iloc[:,-1].max() + 1/9)
 		ylims = (coords.iloc[:,0].min() - 1/9, coords.iloc[:,0].max() + 1/9)
@@ -463,7 +467,7 @@ class StabDiv(Scene):
 
 #################
 
-		coords = pd.read_csv(r"C:/Users/riley/Microbiome/animation/CSVs/OD5_CL1_noP.csv", index_col=0)
+		coords = pd.read_csv(r"./CSVs/OD5_CL1_noP.csv", index_col=0)
 		
 		xlims = (coords.iloc[:,-1].min() - 1/9, coords.iloc[:,-1].max() + 1/9)
 		ylims = (coords.iloc[:,0].min() - 1/9, coords.iloc[:,0].max() + 1/9)
@@ -498,7 +502,7 @@ class StabDiv(Scene):
 
 ################
 ################
-		coords = pd.read_csv(r"C:/Users/riley/Microbiome/animation/CSVs/gLV10.csv", index_col=0)
+		coords = pd.read_csv(r"./CSVs/gLV10.csv", index_col=0)
 		
 		xlims = (coords.iloc[:,-1].min() - 1/9, coords.iloc[:,-1].max() + 1/9)
 		ylims = (coords.iloc[:,0].min() - 1/9, coords.iloc[:,0].max() + 1/9)
@@ -527,7 +531,7 @@ class StabDiv(Scene):
 
 #################
 
-		coords = pd.read_csv(r"C:/Users/riley/Microbiome/animation/CSVs/OD10_CL1_noP.csv", index_col=0)
+		coords = pd.read_csv(r"./CSVs/OD10_CL1_noP.csv", index_col=0)
 		
 		xlims = (coords.iloc[:,-1].min() - 1/9, coords.iloc[:,-1].max() + 1/9)
 		ylims = (coords.iloc[:,0].min() - 1/9, coords.iloc[:,0].max() + 1/9)
@@ -556,25 +560,28 @@ class StabDiv(Scene):
 
 		self.wait(2)
 
+
+### Not doing ^ that again anytime soon. Not without the code doing more of the heavy lifting, anyway.
+### Just move some pngs around, they love that shit.
 class FurtherResults(Scene):
 	def construct(self):
 		title = Tex(r"Further Results")
 		title.to_edge(UP)
 		self.play(FadeIn(title))
 
-		OD5_CL1= ImageMobject("C:/Users/riley/Microbiome/animation/myplots/OD5_CL1_stab_div.png")
+		OD5_CL1= ImageMobject("./myplots/OD5_CL1_stab_div.png")
 		OD5_CL1.scale(0.5)
 		OD5_CL1.to_edge(RIGHT, buff=0.25)
 
-		gLV5= ImageMobject("C:/Users/riley/Microbiome/animation/myplots/gLV5_stab_div.png")
+		gLV5= ImageMobject("./myplots/gLV5_stab_div.png")
 		gLV5.scale(0.5)
 		gLV5.to_edge(LEFT, buff=0.25)
 
-		OD10_CL1= ImageMobject("C:/Users/riley/Microbiome/animation/myplots/OD10_CL1_stab_div.png")
+		OD10_CL1= ImageMobject("./myplots/OD10_CL1_stab_div.png")
 		OD10_CL1.scale(0.5)
 		OD10_CL1.to_edge(RIGHT, buff=0.25)
 
-		gLV10= ImageMobject("C:/Users/riley/Microbiome/animation/myplots/gLV10_stab_div.png")
+		gLV10= ImageMobject("./myplots/gLV10_stab_div.png")
 		gLV10.scale(0.5)
 		gLV10.to_edge(LEFT, buff=0.25)
 
@@ -589,6 +596,7 @@ class FurtherResults(Scene):
 		self.play(Unwrite(title, reverse=True), FadeOut(gLV10, shift=DOWN), FadeOut(OD10_CL1, shift=DOWN))
 		self.wait(3)
 
+### Scratchwork
 class eigvalDemo(Scene):
 	def construct(self):
 		line1 = Tex(r"$ \text{Re}(\lambda_i) < 0 $")
@@ -604,8 +612,3 @@ class eigvalDemo(Scene):
 		# self.play(FadeOut(line1), FadeOut(line2))
 		
 		self.wait(3)
-
-# class test(Scene):
-# 	def construct(self):
-# 		glvSys = Tex(r"$\dot{S_i} = r_{i} S_{i} (1-\frac{S_{i}}{k_{i}}) + S_{i} \sum_{j=1, j\neq i}^{N} \a_{i,j} S_{j}.$")
-# 		self.play(Write(glvSys))
